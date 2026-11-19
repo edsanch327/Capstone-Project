@@ -1,0 +1,1 @@
+import {Link} from 'react-router';export default function Footer(){return <footer className="footer"><div className="container footer-inner"><Link to="/" className="logo">forma.</Link><span>Good hair. Good energy.</span><span>© {new Date().getFullYear()} forma. Studio</span></div></footer>}

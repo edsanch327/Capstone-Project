@@ -1,0 +1,69 @@
+-- === Beauty Calendar MySQL Database ===
+CREATE DATABASE IF NOT EXISTS beauty_calendar CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE beauty_calendar;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS services (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  price DECIMAL(8,2) NOT NULL,
+  duration_minutes INT UNSIGNED NOT NULL,
+  active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS stylists (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  specialty VARCHAR(150) NOT NULL,
+  bio TEXT NOT NULL,
+  active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS stylist_services (
+  stylist_id INT UNSIGNED NOT NULL,
+  service_id INT UNSIGNED NOT NULL,
+  PRIMARY KEY (stylist_id, service_id),
+  FOREIGN KEY (stylist_id) REFERENCES stylists(id),
+  FOREIGN KEY (service_id) REFERENCES services(id)
+);
+
+CREATE TABLE IF NOT EXISTS appointments (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  service_id INT UNSIGNED NOT NULL,
+  stylist_id INT UNSIGNED NOT NULL,
+  starts_at DATETIME NOT NULL,
+  ends_at DATETIME NOT NULL,
+  status ENUM('booked','cancelled') NOT NULL DEFAULT 'booked',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_stylist_time (stylist_id, starts_at, ends_at),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (service_id) REFERENCES services(id),
+  FOREIGN KEY (stylist_id) REFERENCES stylists(id)
+);
+
+CREATE TABLE IF NOT EXISTS reviews (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  rating TINYINT UNSIGNED NOT NULL,
+  comment VARCHAR(1000) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  CONSTRAINT chk_rating CHECK (rating BETWEEN 1 AND 5)
+);
+
+CREATE TABLE IF NOT EXISTS contacts (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

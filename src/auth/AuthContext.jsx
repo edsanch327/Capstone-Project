@@ -1,49 +1,76 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const API = import.meta.env.VITE_API;
+import { request } from "./api.js";
 
-const AuthContext = createContext();
+const Context = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) sessionStorage.setItem("token", token);
-  }, [token]);
+    if (!localStorage.getItem("forma_token")) {
+      setLoading(false);
+      return;
+    }
 
-  const register = async (credentials) => {
-    const response = await fetch(API + "/users/register", {
+    request("/auth/me")
+      .then((data) => {
+        setUser(data.user);
+      })
+      .catch(() => {
+        localStorage.removeItem("forma_token");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  async function login(email, password) {
+    const data = await request("/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify({
+        email,
+        password,
+      }),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
-  };
 
-  const login = async (credentials) => {
-    const response = await fetch(API + "/users/login", {
+    localStorage.setItem("forma_token", data.token);
+    setUser(data.user);
+  }
+
+  async function register(name, email, password) {
+    const data = await request("/auth/register", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
-  };
 
-  const logout = () => {
-    setToken(null);
-    sessionStorage.removeItem("token");
-  };
+    localStorage.setItem("forma_token", data.token);
+    setUser(data.user);
+  }
 
-  const value = { token, register, login, logout };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  function logout() {
+    localStorage.removeItem("forma_token");
+    setUser(null);
+  }
+
+  return (
+    <Context.Provider
+      value={{
+        user,
+        loading,
+        login,
+        register,
+        logout,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
 }
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) throw Error("useAuth must be used within an AuthProvider");
-  return context;
-}
+export const useAuth = () => useContext(Context);

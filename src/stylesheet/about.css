@@ -1,0 +1,22 @@
+.story {
+    max-width:1140px
+}
+
+.story .lead {
+    font-size:20px;
+    max-width:680px;
+    margin-top:30px
+}
+
+.story h1 {
+    max-width:850px
+}
+
+.story>p:not(.eyebrow) {
+    max-width:750px;
+    color:#aaa69f
+}
+
+.story .eyebrow {
+    margin-bottom:20px
+}

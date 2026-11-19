@@ -1,0 +1,37 @@
+.footer {
+    border-top:1px solid #3b3a37;
+    background:#1d1d1b
+}
+
+.footer-inner {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:25px;
+    min-height:125px
+}
+
+.footer-inner span {
+    color:#a7a39b;
+    font-size:12px
+}
+
+@media(max-width:600px) {
+    .footer-inner {
+        flex-direction:column;
+        justify-content:center;
+        padding:30px 0
+    }
+}
+
+.footer .logo {
+    font-size:27px
+}
+
+.footer-inner {
+    flex-wrap:wrap
+}
+
+.footer a:hover {
+    color:#d5c7a5
+}

@@ -1,42 +1,75 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { useAuth } from "./AuthContext.jsx";
 
-import { useAuth } from "./AuthContext";
-
-/** A form that allows users to log into an existing account. */
 export default function Login() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { login } = useAuth(),
+    navigate = useNavigate();
+  const [email, setEmail] = useState(""),
+    [password, setPassword] = useState(""),
+    [error, setError] = useState(""),
+    [busy, setBusy] = useState(false);
 
-  const [error, setError] = useState(null);
+  async function submit(e) {
+    e.preventDefault();
+    setError("");
+    setBusy(true);
 
-  const onLogin = async (formData) => {
-    const username = formData.get("username");
-    const password = formData.get("password");
     try {
-      await login({ username, password });
-      navigate("/");
+      await login(email, password);
+      navigate("/dashboard");
     } catch (e) {
       setError(e.message);
+    } finally {
+      setBusy(false);
     }
-  };
+  }
 
   return (
-    <>
-      <h1>Log in to your account</h1>
-      <form action={onLogin}>
-        <label>
-          Username
-          <input type="username" name="username" required />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-        <button>Login</button>
-        {error && <output>{error}</output>}
-      </form>
-      <Link to="/register">Need an account? Register here.</Link>
-    </>
+    <section className="auth-page">
+      <div className="auth-card">
+        <p className="eyebrow">WELCOME BACK</p>
+        <h1>Good to see you.</h1>
+        <p>Log in to manage your appointments.</p>
+
+        <form onSubmit={submit}>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </label>
+
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </label>
+
+          {error && (
+            <p className="error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <button className="btn" disabled={busy}>
+            {busy ? "Signing in..." : "LOG IN ↗"}
+          </button>
+        </form>
+
+        <p>
+          New here? <Link to="/register">Create an account</Link>
+        </p>
+      </div>
+    </section>
   );
 }
