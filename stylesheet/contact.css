@@ -1,0 +1,20 @@
+form {
+  display: grid;
+  gap: 0.25rem;
+}
+
+label {
+  display: grid;
+}
+
+button {
+  background: pink;
+  color: white;
+  border: 0;
+  padding: 0.25rem;
+}
+
+button:hover {
+  cursor: pointer;
+  background: magenta;
+}

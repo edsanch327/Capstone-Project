@@ -1,0 +1,23 @@
+figure {
+  border: 2px solid pink;
+  padding: 0.5rem;
+}
+
+figcaption {
+  text-align: right;
+}
+
+@media (width >= 600px) {
+  main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.5rem;
+  }
+  img {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  figure {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,0 +1,48 @@
+#navbar {
+  background: pink;
+  color: white;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+#navbar p {
+  font-size: 1.25em;
+  text-transform: uppercase;
+}
+
+p1 {
+  color: white;
+  text-decoration: none;
+  font-size: 2em;
+  align-self: center;
+}
+
+#navbar nav {
+  display: grid;
+}
+
+#navbar a {
+  color: white;
+  padding: 0.25rem;
+  text-decoration: none;
+}
+
+#navbar a:hover {
+  background: pink;
+}
+
+#navbar a.active {
+  text-decoration: underline;
+}
+
+@media (width >= 600px) {
+  #navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+  }
+  #navbar nav {
+    display: flex;
+  }
+}
