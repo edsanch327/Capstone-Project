@@ -1,76 +1,58 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { request } from "./api.js";
 
-const Context = createContext(null);
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!localStorage.getItem("forma_token")) {
-      setLoading(false);
-      return;
+    useEffect(() => {
+        if (!localStorage.getItem("beauty_calendar_token")) {
+            setLoading(false);
+            return;
+        }
+
+        request("/auth/me")
+            .then((data) => setUser(data.user))
+            .catch(() => localStorage.removeItem("beauty_calendar_token"))
+            .finally(() => setLoading(false));
+    }, []);
+
+    async function login(email, password) {
+        const data = await request("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password })
+        });
+        localStorage.setItem("beauty_calendar_token", data.token);
+        setUser(data.user);
     }
 
-    request("/auth/me")
-      .then((data) => {
+    async function register(name, email, password) {
+        const data = await request("/auth/register", {
+            method: "POST",
+            body: JSON.stringify({ name, email, password })
+        });
+        localStorage.setItem("beauty_calendar_token", data.token);
         setUser(data.user);
-      })
-      .catch(() => {
-        localStorage.removeItem("forma_token");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    }
 
-  async function login(email, password) {
-    const data = await request("/auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    function logout() {
+        localStorage.removeItem("beauty_calendar_token");
+        setUser(null);
+    }
 
-    localStorage.setItem("forma_token", data.token);
-    setUser(data.user);
-  }
-
-  async function register(name, email, password) {
-    const data = await request("/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    });
-
-    localStorage.setItem("forma_token", data.token);
-    setUser(data.user);
-  }
-
-  function logout() {
-    localStorage.removeItem("forma_token");
-    setUser(null);
-  }
-
-  return (
-    <Context.Provider
-      value={{
-        user,
-        loading,
-        login,
-        register,
-        logout,
-      }}
-    >
-      {children}
-    </Context.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
-export const useAuth = () => useContext(Context);
+export function useAuth() {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuth must be used within AuthProvider");
+    }
+    return context;
+}

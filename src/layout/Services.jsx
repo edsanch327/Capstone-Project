@@ -1,2 +1,22 @@
-import {Link} from 'react-router';import {services} from './servicesData.js';
-export default function Services(){return <section className="inner-page container"><p className="eyebrow">THE GOOD STUFF</p><h1>Services with intention.</h1><p className="lead">Thoughtful hair care, just for you. Prices are starting estimates.</p><div className="service-grid">{services.map((s,i)=><article className="service-tile" key={s.id}><div className="service-top"><span>0{i+1}</span><span>{s.duration} MIN</span></div><h3>{s.name}</h3><p>{s.description}</p><p className="price">From ${s.price}</p><Link className="text-link" to={`/booking?service=${s.id}`}>Book this service ↗</Link></article>)}</div></section>}
+import { Link } from "react-router";
+import { services } from "./data.js";
+
+export default function Services() {
+    return (
+        <section className="container inner-page">
+            <p className="eyebrow">THE GOOD STUFF</p>
+            <h1>Services made for you.</h1>
+            <p className="muted page-lead">Every appointment begins with listening. Here are a few ways we can make your hair feel its best.</p>
+            <div className="service-list">
+                {services.map((service, index) => (
+                    <article className="service-row" key={service.name}>
+                        <span className="eyebrow">0{index + 1}</span>
+                        <div><h2>{service.name}</h2><p className="muted">{service.description}</p></div>
+                        <div className="service-price">From ${service.price}<small>{service.duration} min</small></div>
+                        <Link className="text-link" to="/booking">Book ↗</Link>
+                    </article>
+                ))}
+            </div>
+        </section>
+    );
+}

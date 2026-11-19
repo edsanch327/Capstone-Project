@@ -1,1 +1,14 @@
-export default function About(){return <section className="inner-page container story"><p className="eyebrow">OUR STORY</p><h1>Hair is personal.<br/>So are we.</h1><p className="lead">forma. is a neighbourhood hair studio built around the idea that feeling good matters just as much as looking good. No rush, no pressure — just thoughtful conversations, skilled hands, and a little time that's yours.</p></section>}
+import { Link } from "react-router";
+
+export default function About() {
+    return (
+        <section className="container inner-page story-layout">
+            <div><p className="eyebrow">OUR STORY</p><h1>A softer kind of salon day.</h1></div>
+            <div className="story-copy">
+                <p>We believe great hair starts with feeling comfortable in your own skin.</p>
+                <p className="muted">Beauty Calendar is a demo salon experience built around thoughtful appointments, easy booking, and space to slow down. Come as you are and leave feeling a little more like yourself.</p>
+                <Link className="outline-button" to="/booking">COME SAY HELLO ↗</Link>
+            </div>
+        </section>
+    );
+}

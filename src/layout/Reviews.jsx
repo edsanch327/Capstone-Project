@@ -1,39 +1,27 @@
 import { Link } from "react-router";
 
-const testimonials = [
-    {
-        quote: "I left feeling so much more like myself. Such a calm, welcoming experience.",
-        name: "Sample client review"
-    },
-    {
-        quote: "They really listened to what I wanted, and the whole appointment felt relaxed.",
-        name: "Sample client review"
-    },
-    {
-        quote: "Beautiful space, thoughtful service, and a haircut I genuinely love.",
-        name: "Sample client review"
-    }
+const reviews = [
+    "I left feeling so much more like myself. Such a calm, welcoming experience.",
+    "They really listened to what I wanted. Everything felt relaxed and easy.",
+    "Beautiful space, thoughtful service, and a haircut I genuinely love."
 ];
 
 export default function Reviews() {
     return (
-        <section className="inner-page container reviews-page">
+        <section className="container inner-page">
             <p className="eyebrow">KIND WORDS</p>
             <h1>A little love goes a long way.</h1>
-            <p className="lead">
-                These are placeholder testimonials. Replace them with
-                real client reviews before publishing.
-            </p>
-            <div className="reviews-grid">
-                {testimonials.map((review, index) => (
+            <p className="muted page-lead">Example reviews for this demo. Replace these with real testimonials before publishing.</p>
+            <div className="review-grid">
+                {reviews.map((review, index) => (
                     <article className="review-card" key={index}>
-                        <div className="review-stars" aria-label="Five decorative stars">★★★★★</div>
-                        <blockquote>“{review.quote}”</blockquote>
-                        <p>{review.name}</p>
+                        <span className="stars">★★★★★</span>
+                        <blockquote>“{review}”</blockquote>
+                        <p className="muted">Sample client review</p>
                     </article>
                 ))}
             </div>
-            <Link to="/booking" className="btn">FIND YOUR APPOINTMENT ↗</Link>
+            <Link className="outline-button" to="/booking">BOOK A VISIT ↗</Link>
         </section>
     );
 }

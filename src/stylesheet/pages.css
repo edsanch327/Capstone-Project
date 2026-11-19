@@ -1,0 +1,120 @@
+.service-list {
+    border-top: 1px solid #494741;
+}
+
+.service-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 110px 70px;
+    gap: 20px;
+    align-items: center;
+    padding: 35px 0;
+    border-bottom: 1px solid #494741;
+}
+
+.service-row h2 {
+    font-size: 29px;
+    margin-bottom: 8px;
+}
+
+.service-row p {
+    font-size: 13px;
+    margin: 0;
+}
+
+.service-price {
+    font-size: 13px;
+}
+
+.service-price small {
+    display: block;
+    margin-top: 8px;
+    color: #aaa69f;
+}
+
+.stylist-grid, .review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin: 50px 0;
+}
+
+.stylist-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    margin-bottom: 25px;
+}
+
+.stylist-card h2 {
+    font-size: 30px;
+    margin: 12px 0;
+}
+
+.stylist-card > p:not(.eyebrow) {
+    font-size: 13px;
+}
+
+.story-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+}
+
+.story-copy {
+    padding-top: 65px;
+    font-size: 19px;
+    line-height: 1.8;
+}
+
+.story-copy .muted {
+    font-size: 14px;
+}
+
+.story-copy .outline-button {
+    margin-top: 30px;
+}
+
+.review-card {
+    border: 1px solid #494741;
+    padding: 30px;
+    background: #292824;
+}
+
+.review-card blockquote {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    line-height: 1.5;
+    margin: 25px 0;
+}
+
+.appointment-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 25px 0;
+    border-top: 1px solid #494741;
+}
+
+.appointment-card h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 750px) {
+    .stylist-grid, .review-grid, .story-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .service-row {
+        grid-template-columns: 1fr auto;
+    }
+
+    .service-row .eyebrow {
+        display: none;
+    }
+
+    .story-copy {
+        padding-top: 0;
+    }
+}

@@ -1,91 +1,57 @@
 .announcement {
-    text-align:center;
-    font-size:10px;
-    letter-spacing:1.3px;
-    padding:12px 16px;
-    background:#262623;
-    color:#eee9df
+    padding: 13px;
+    text-align: center;
+    font-size: 9px;
+    letter-spacing: 1.1px;
+    background: #262521;
 }
 
-.site-header {
-    background:#242422
+.header {
+    background: #242320;
 }
 
-.nav {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:25px;
-    min-height:100px
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    min-height: 95px;
 }
 
 .logo {
-    font-size:30px;
-    font-weight:600;
-    white-space:nowrap
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: -1px;
 }
 
 .nav-links {
-    display:flex;
-    gap:28px;
-    align-items:center
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
 }
 
-.nav-links a,.nav-logout {
-    font-size:12px;
-    color:#a7a59f
+.nav-links a, .nav-logout {
+    color: #aaa69f;
+    font-size: 12px;
+    background: transparent;
+    border: 0;
+    padding: 0;
 }
 
-.nav-links a:hover,.nav-links a.active {
-    color:#f5f2ed
+.nav-links a.active, .nav-links a:hover {
+    color: #fff;
 }
 
-.nav-logout {
-    border:0;
-    background:none
-}
-
-.nav-book {
-    white-space:nowrap
-}
-
-@media(max-width:750px) {
-    .nav {
-        flex-wrap:wrap;
-        padding:20px 0;
-        gap:16px
+@media (max-width: 850px) {
+    .navigation {
+        flex-wrap: wrap;
+        padding: 24px 0;
     }
+
     .nav-links {
-        order:3;
-        width:100%;
-        overflow:auto;
-        gap:18px;
-        padding:5px 0
-    }
-    .nav-book {
-        margin-left:auto
-    }
-}
-
-/* Mobile navigation keeps every page accessible */
-@media(max-width:480px) {
-    .announcement {
-        font-size:8px;
-        letter-spacing:1px
-    }
-    .nav {
-        min-height:unset
-    }
-    .logo {
-        font-size:28px
-    }
-    .nav-links {
-        gap:20px
-    }
-    .nav-links a,.nav-logout {
-        white-space:nowrap
-    }
-    .nav-book {
-        font-size:9px
+        order: 3;
+        width: 100%;
+        gap: 16px;
     }
 }

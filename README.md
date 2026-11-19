@@ -1,29 +1,30 @@
-# forma. React salon project
+# Beauty Calendar — Forma Salon
 
-This project includes the homepage, services, stylists, our story, reviews,
-contact, login, registration, booking, and customer dashboard.
+A fresh React + Vite salon website with Express, SQLite, registration, login, and appointment booking.
 
-## Folder layout
+## Requirements
 
-- `src/layout/`: React page components, navbar and footer
-- `src/stylesheet/`: Separate, readable CSS files
-- `src/auth/`: Login, registration, auth context and API helper
-- `server/`: Express API and SQLite persistence (not browser code)
+Node.js 22 or newer and npm.
 
-## Run locally
+## Setup
 
-1. Install Node.js 22+ and run `npm install`.
-2. Copy `.env.example` to `.env` and change `JWT_SECRET` to a long random value.
-3. In one terminal run `npm run server`.
-4. In another terminal run `npm run dev`.
-5. Open the local address shown by Vite (usually http://localhost:5173).
+1. Extract this folder and open it in VS Code.
+2. Run `npm install` in the project root.
+3. In terminal 1, run `npm run server`.
+4. In terminal 2, run `npm run dev`.
+5. Open the Vite URL, usually http://localhost:5173/.
 
-If your Windows NVM launcher produces `UnsupportedVersionSpec`, prepend the
-real Node installation folder to the terminal PATH as previously discussed.
+The included `.env` contains a randomly generated JWT secret for local development. Do not publish it. If you lose the file, copy `.env.example` to `.env` and replace the placeholder with a secure random secret.
 
-The hero image uses a remote Unsplash image, so it may not exactly match the
-screenshot and requires an internet connection. Stylists and reviews are
-clearly labeled sample content. Replace those and the contact information
-before publishing. The booking hours are examples.
+The database is created automatically in `server/beauty-calendar.db` the first time the backend starts. The frontend proxies `/api` to port 3001 through Vite. Visit http://localhost:3001/api/health to verify the backend.
 
-The backend is a local starter, not a production-hardened deployment.
+## Folders
+
+- `src/layout`: React pages, navigation, footer, shared data
+- `src/stylesheet`: individually formatted CSS files
+- `src/auth`: React login/registration pages and auth context
+- `server`: Express API, password hashing, token validation, SQLite storage
+
+## Notes
+
+This project uses SQLite for easy local setup, not MySQL. Sample stylist profiles, reviews, contact information and service prices are placeholders. The hero and stylist photos are externally hosted Unsplash images; they may differ from the reference screenshot and require internet access. Booking times are example slots, not a real salon's live schedule. This is a local development starter and needs further security and operational work before public deployment.

@@ -1,130 +1,67 @@
 .auth-page {
-    min-height:70vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:75px 24px
+    display: flex;
+    justify-content: center;
+    padding-top: 90px;
+    padding-bottom: 110px;
+    min-height: 75vh;
 }
 
 .auth-card {
-    width:min(100%,490px)
+    width: min(100%, 500px);
 }
 
-.auth-card>p {
-    color:#aaa7a0
-}
-
-.auth-card a:not(.btn),.appointments a {
-    border-bottom:1px solid #aaa
-}
-
-.auth-card form {
-    display:grid;
-    gap:20px;
-    margin:32px 0
-}
-
-.auth-card label {
-    display:grid;
-    gap:9px;
-    color:#c6c3bc;
-    font-size:13px
-}
-
-.auth-card input,.auth-card select {
-    width:100%;
-    background:#2e2d2a;
-    color:#eee;
-    border:1px solid #57544e;
-    border-radius:0;
-    padding:15px;
-    min-height:48px;
-    color-scheme:dark
-}
-
-.auth-card .btn {
-    justify-self:start
-}
-
-.booking-card {
-    width:min(100%,580px)
-}
-
-.appointments {
-    margin:40px 0
-}
-
-.appointment {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    border-top:1px solid #45433e;
-    padding:24px 0
-}
-
-.appointment h3 {
-    font-size:25px;
-    margin-bottom:8px
-}
-
-.appointment p {
-    font-size:13px;
-    color:#aaa
-}
-
-.appointment .text-link {
-    cursor:pointer
-}
-
-/* Authentication, appointment booking, and dashboard */
 .auth-card h1 {
-    margin:18px 0
+    font-size: clamp(52px, 6vw, 78px);
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin: 25px 0 18px;
 }
 
-.auth-card form {
-    width:100%
+.auth-card > p.muted {
+    margin-bottom: 35px;
 }
 
-.auth-card input:focus,.auth-card select:focus {
-    border-color:#c8b98c;
-    outline:1px solid #c8b98c;
-    outline-offset:0
+.auth-card form, .booking-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
 }
 
-.auth-card input::placeholder {
-    color:#aaa69e
+.auth-card label, .booking-form label {
+    display: block;
+    width: 100%;
+    font-size: 13px;
 }
 
-.auth-card .error {
-    background:#3a2727;
-    border-left:2px solid #ff9d9d;
-    padding:12px 15px
+.auth-card input, .booking-form input, .booking-form select {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 16px;
+    color: #fff;
+    background: #2c2b28;
+    border: 1px solid #57554f;
+    outline-color: #b6aa83;
 }
 
-.booking-card select {
-    appearance:auto
+.auth-card form + p {
+    margin-top: 32px;
 }
 
-.appointment .text-link:hover {
-    color:#e4d1ac
+.booking-form {
+    max-width: 530px;
 }
 
-.appointments .appointment:last-child {
-    border-bottom:1px solid #45433e
+.form-error {
+    width: 100%;
+    color: #ffb2ad;
+    padding: 16px;
+    border-left: 2px solid #e69a95;
+    background: #3a2928;
 }
 
-@media(max-width:600px) {
-    .auth-page {
-        padding:55px 16px;
-        align-items:flex-start
-    }
-    .appointment {
-        align-items:flex-start;
-        flex-direction:column;
-        gap:12px
-    }
-    .auth-card form {
-        gap:16px
-    }
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
 }

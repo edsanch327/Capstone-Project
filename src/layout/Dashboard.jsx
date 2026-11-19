@@ -1,2 +1,48 @@
-import {useEffect,useState} from 'react';import {Link} from 'react-router';import {useAuth} from '../auth/AuthContext.jsx';import {request} from '../auth/api.js';import {services} from './servicesData.js';
-export default function Dashboard(){const {user,loading}=useAuth();const [appointments,setAppointments]=useState([]),[error,setError]=useState('');useEffect(()=>{if(user)request('/appointments').then(d=>setAppointments(d.appointments)).catch(e=>setError(e.message))},[user]);async function cancel(id){if(!window.confirm('Cancel this appointment?'))return;try{await request(`/appointments/${id}`,{method:'DELETE'});setAppointments(a=>a.filter(x=>x.id!==id))}catch(e){setError(e.message)}}return <section className="inner-page container"><p className="eyebrow">YOUR SPACE</p><h1>{user?`Hello, ${user.name.split(' ')[0]}.`:'Your appointments.'}</h1>{loading?<p>Loading...</p>:!user?<p><Link to="/login">Log in</Link> to see your appointments.</p>:<><p className="lead">Your upcoming visits, all in one place.</p>{error&&<p className="error" role="alert">{error}</p>}<div className="appointments">{appointments.length===0?<p>No appointments yet. <Link to="/booking">Book your first visit ↗</Link></p>:appointments.map(a=><article className="appointment" key={a.id}><div><h3>{services.find(s=>s.id===a.service)?.name||a.service}</h3><p>{a.date} at {a.time} · {a.status}</p></div><button className="text-link" onClick={()=>cancel(a.id)}>Cancel</button></article>)}</div><Link to="/booking" className="btn">BOOK ANOTHER VISIT ↗</Link></>}</section>}
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { useAuth } from "../auth/AuthContext.jsx";
+import { request } from "../auth/api.js";
+
+export default function Dashboard() {
+    const { user, loading } = useAuth();
+    const [appointments, setAppointments] = useState([]);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (!user) return;
+        request("/appointments")
+            .then((data) => setAppointments(data.appointments))
+            .catch((err) => setError(err.message));
+    }, [user]);
+
+    async function cancel(id) {
+        try {
+            await request(`/appointments/${id}`, { method: "DELETE" });
+            setAppointments((items) => items.filter((item) => item.id !== id));
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
+    if (loading) return <section className="container inner-page">Loading...</section>;
+    if (!user) return <section className="container inner-page"><h1>Your visits.</h1><p className="muted">Log in to see your appointments.</p><Link className="outline-button" to="/login">LOG IN ↗</Link></section>;
+
+    return (
+        <section className="container inner-page">
+            <p className="eyebrow">YOUR LITTLE CORNER</p>
+            <h1>Hi, {user.name}.</h1>
+            <p className="muted page-lead">Your upcoming salon appointments live here.</p>
+            {error && <p className="form-error" role="alert">{error}</p>}
+            {appointments.length === 0 && <p className="muted">No appointments yet. Let's change that.</p>}
+            <div className="appointment-list">
+                {appointments.map((item) => (
+                    <article className="appointment-card" key={item.id}>
+                        <div><h2>{item.service}</h2><p className="muted">{item.stylist} · {item.date} at {item.time}</p></div>
+                        <button className="text-link" onClick={() => cancel(item.id)}>Cancel</button>
+                    </article>
+                ))}
+            </div>
+            <Link className="outline-button" to="/booking">BOOK ANOTHER VISIT ↗</Link>
+        </section>
+    );
+}
