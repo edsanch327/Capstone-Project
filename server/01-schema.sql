@@ -1,14 +1,13 @@
--- MySQL schema converted from Beauty Calendar SQLite database (including WAL state).
 CREATE DATABASE IF NOT EXISTS `beauty_calendar` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `beauty_calendar`;
-
+--Create Table for Users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` TEXT NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
   `password_hash` TEXT NOT NULL
 ) ENGINE=InnoDB;
-
+--Create Table for Appointments
 CREATE TABLE IF NOT EXISTS `appointments` (
   `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT NOT NULL,
