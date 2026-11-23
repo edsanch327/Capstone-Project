@@ -1,3 +1,5 @@
+//This file creates an authentication context so components across the app can access current user
+and call login, register, or logout//
 import { createContext, useContext, useEffect, useState } from "react";
 import { request } from "./api.js";
 

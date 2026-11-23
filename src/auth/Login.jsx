@@ -1,3 +1,6 @@
+//This is a react login page. it displays an email-and-form calls a login function when submitted 
+shows error if login fails and sends user to dahsbourd if login is successful//
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext.jsx";
